@@ -1,0 +1,29 @@
+{
+  "name": "psql-query-builder",
+  "version": "1.0.0",
+  "description": "builds query in postgres using pg",
+  "main": "./dist/index.js",
+  "types": "./typings/index.d.ts",
+  "exports": {
+    "./src": [
+      {
+        "default": "./dist/index.js"
+      }
+    ]
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon dist/index"
+  },
+  "keywords": [],
+  "author": "Renan Sinhorini",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/pg": "^8.6.0",
+    "nodemon": "^2.0.7",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "pg": "^8.6.0"
+  }
+}
