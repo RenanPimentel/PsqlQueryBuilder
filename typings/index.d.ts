@@ -71,6 +71,7 @@ declare module "psql-query-builder" {
     and(andOptions: KeyIsValueObj): this;
     or(orOptions: KeyIsValueObj): this;
     orderBy(orderOptions: OrderOptionObj): this;
+    using(table: string): this;
     clearQuery(): this;
   }
 

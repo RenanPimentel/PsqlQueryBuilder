@@ -154,6 +154,12 @@ export class PsqlQueryBuilder implements BasePsqlQueryBuilder {
     return this;
   }
 
+  using(table: string): this {
+    const query = `USING ${table}`;
+    this.response.queries.push(query);
+    return this;
+  }
+
   where(obj: KeyIsValueObj): this {
     return this.queryArgs(obj, "WHERE");
   }
