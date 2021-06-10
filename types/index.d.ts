@@ -58,8 +58,8 @@ declare module "psql-query-builder" {
     response: PsqlResponse;
     client: Client;
 
+    static init(config?: Config): Promise<BasePsqlQueryBuilder>;
     send<T>(): Promise<QueryResult<T>>;
-    toString(): string;
     raw(queryStr: string, args?: any[]): this;
     returning(returnOptions?: OptionObj | string[]): this;
     selectFrom(table: string, selectOption?: SelectOptionObj | string[]): this;
@@ -73,6 +73,7 @@ declare module "psql-query-builder" {
     orderBy(orderOptions: OrderOptionObj): this;
     using(table: string): this;
     clearQuery(): this;
+    toString(): string;
   }
 
   export type Config = ClientConfig;

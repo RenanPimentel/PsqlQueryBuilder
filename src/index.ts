@@ -9,7 +9,7 @@ import {
   SelectOptionObj,
   KeyIsValueObj,
 } from "psql-query-builder";
-import "../typings/index";
+import "../types/index";
 import { getDefaultResponse } from "./constants";
 import { getType } from "./utils/getType";
 
