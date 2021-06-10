@@ -27,6 +27,16 @@ export class PsqlQueryBuilder implements BasePsqlQueryBuilder {
     return qBuilder;
   }
 
+  private queryArgs(
+    { key, is, value }: KeyIsValueObj,
+    type: "WHERE" | "OR" | "AND"
+  ): this {
+    this.response.args.push(value);
+    const query = `${type} ${key} ${is} $${this.response.args.length}`;
+    this.response.queries.push(query);
+    return this;
+  }
+
   async send<T>(): Promise<QueryResult<T>> {
     const { args, query } = this.response;
 
@@ -132,9 +142,9 @@ export class PsqlQueryBuilder implements BasePsqlQueryBuilder {
     }
     createArr.push(")");
 
-    this.response.queries.push(
-      createArr.join(", ").replace("(,", "(").replace(", )", " )")
-    );
+    const query = createArr.join(", ").replace("(,", "(").replace(", )", " )");
+
+    this.response.queries.push(query);
     return this;
   }
 
@@ -144,25 +154,16 @@ export class PsqlQueryBuilder implements BasePsqlQueryBuilder {
     return this;
   }
 
-  where({ key, is, value }: KeyIsValueObj): this {
-    this.response.args.push(value);
-    const query = `WHERE ${key} ${is} $${this.response.args.length}`;
-    this.response.queries.push(query);
-    return this;
+  where(obj: KeyIsValueObj): this {
+    return this.queryArgs(obj, "WHERE");
   }
 
-  and({ key, is, value }: KeyIsValueObj): this {
-    this.response.args.push(value);
-    const query = `AND ${key} ${is} $${this.response.args.length}`;
-    this.response.queries.push(query);
-    return this;
+  and(obj: KeyIsValueObj): this {
+    return this.queryArgs(obj, "AND");
   }
 
-  or({ key, is, value }: KeyIsValueObj): this {
-    this.response.args.push(value);
-    const query = `OR ${key} ${is} $${this.response.args.length}`;
-    this.response.queries.push(query);
-    return this;
+  or(obj: KeyIsValueObj): this {
+    return this.queryArgs(obj, "OR");
   }
 
   orderBy(orderOptions: OrderOptionObj): this {
@@ -183,7 +184,7 @@ export class PsqlQueryBuilder implements BasePsqlQueryBuilder {
     return this;
   }
 
-  toString() {
+  toString(): string {
     return this.response.query;
   }
 }

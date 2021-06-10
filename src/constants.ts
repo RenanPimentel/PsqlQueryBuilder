@@ -4,6 +4,6 @@ export const getDefaultResponse = (): PsqlResponse => ({
   queries: [],
   args: [],
   get query() {
-    return this.queries.join(" ");
+    return this.queries.join(" ").replace(/\s+/g, " ");
   },
 });

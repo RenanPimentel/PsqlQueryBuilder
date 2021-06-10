@@ -19,12 +19,23 @@ declare module "psql-query-builder" {
     [key: string]: { value: any };
   }
 
+  export interface FKeyOptions {
+    tableKeyName: string;
+    foreignKeyName: string;
+    references: {
+      table: string;
+      tableKey: string;
+    };
+    onDelete?: "SET NULL" | "CASCADE";
+  }
+
   export interface CreateOptionsObj {
     [key: string]: {
       type: Type;
       defaulValue?: string;
       nullable?: boolean;
       primaryKey?: boolean;
+      foreignKey?: FKeyOptions;
       n?: number;
       p?: number;
       s?: number;
